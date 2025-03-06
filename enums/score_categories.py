@@ -9,7 +9,7 @@ class ScoreCategories(Enum):
     SIXES = "Sixes"
     BONUS = "Bonus"
     CHOICE = "Choice"
-    FORUCARD = "Four Card"
+    FOURCARD = "Four Card"
     FULLHOUSE = "Full House"
     SMALL_STRAIGHT = "Small Straight"
     LARGE_STRAIGHT = "Large Straight"

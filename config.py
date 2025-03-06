@@ -7,3 +7,6 @@ class GameConfig:
     INITIAL_DICES: int = 5
     NUM_PICKS: int = 5
     TOTAL_ROUND: int = 12
+    BONUS_CRITIERIA: int = 63
+    BONUS_SCORE: int = 35
+    YACHT_SCORE: int = 50
