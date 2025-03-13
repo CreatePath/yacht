@@ -18,21 +18,23 @@ class YachtScoreCalculator(ScoreCalculator):
 class LargeStraightScoreCalculator(ScoreCalculator):
     def calculate(self, picked: list[int]) -> bool:
         tmp = sorted(picked)
-        for i in range(1, len(tmp)):
+        for i in range(1, GameConfig.NUM_PICKS):
             if tmp[i-1] + 1 != tmp[i]:
                 return 0
-        return sum(tmp)
+        return GameConfig.LARGE_STRAIGHT_SCORE
 
 
 class SmallStraightScoreCalculator(ScoreCalculator):
     def calculate(self, picked: list[int]) -> bool:
         tmp = sorted(picked)
-        ans1 = [tmp[0]+i for i in range(len(picked)-1)]
-        ans2 = [tmp[1]+i for i in range(len(picked)-1)]
-        if tmp[:-1] == ans1:
-            return sum(ans1)
-        elif tmp[1:] == ans2:
-            return sum(ans2)
+        cnt = 1
+        for i in range(GameConfig.NUM_PICKS-1):
+            if tmp[i] + 1 == tmp[i+1]:
+                cnt += 1 
+            elif tmp[i] + 1 < tmp[i+1]:
+                cnt = 1
+            if cnt == 4:
+                return GameConfig.SMALL_STRAIGHT_SCORE
         return 0
 
 
@@ -42,18 +44,17 @@ class FullHouseScoreCalculator(ScoreCalculator):
         if len(tmp) != 2:
             return False
         a, b = list(tmp)
-        if picked.count(a) == 2:
-            return a * 2 + b * 3
-        elif picked.count(b) == 2:
-            return a * 3 + b * 2
+        if picked.count(a) in [2, 3]:
+            return sum(picked)
         return 0
 
 
 class FourCardScoreCalculator(ScoreCalculator):
     def calculate(self, picked: list[int]):
-        for n in picked:
+        tmp = set(picked)
+        for n in tmp:
             if 4 <= picked.count(n):
-                return n * 4
+                return sum(picked)
         return 0
 
 

@@ -42,12 +42,12 @@ class Player:
         picked 조합을 보고 category 선택
         아직 기록되지 않은 category를 선택하도록 함.
         **Return**
-            `selectedCategory`: player가 선택한 category. (ScoreCategory.value)
+            `selectedCategory`: player가 선택한 category. (ScoreCategory)
         '''
         while True:
             print("--- {}의 점수판 ---".format(self.name))
             print(self.scoreBoard)
-            selectedValue = input("점수를 채울 카테고리를 선택하세요 (카테고리 번호 입력): ")
+            selectedValue = input("점수를 채울 카테고리를 선택하세요: ")
 
             # 입력이 ScoreCategories에 속하는지 확인
             try:

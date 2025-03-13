@@ -10,3 +10,5 @@ class GameConfig:
     BONUS_CRITIERIA: int = 63
     BONUS_SCORE: int = 35
     YACHT_SCORE: int = 50
+    SMALL_STRAIGHT_SCORE: int = 15
+    LARGE_STRAIGHT_SCORE: int = 30
