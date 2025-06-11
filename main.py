@@ -1,3 +1,5 @@
+from argparse import ArgumentParser
+
 from common.yacht import Yacht
 from config import GameConfig
 from enums.score_categories import ScoreCategories
@@ -8,8 +10,8 @@ from common.bonus import Bonus
 from common.dice import Dice
 from common import scoreCalculator
 
-def main():
-    GameConfig.NUM_PLAYERS = 2
+def main(args):
+    GameConfig.NUM_PLAYERS = args.num_human + args.num_rand_agent
     subCategories = [ScoreCategories.ACES,
                      ScoreCategories.DEUCES,
                      ScoreCategories.THREES,
@@ -45,4 +47,9 @@ def main():
     game.play()
 
 if __name__ == "__main__":
-    main()
+    parser = ArgumentParser()
+    parser.add_argument("-u", "--num_human", dest="num_human", type=int, action="store", default=2)
+    parser.add_argument("-r", "--num_rand_agent", dest="num_rand_agent", type=int, action="store", default=0)
+    args = parser.parse_args()
+
+    main(args)
