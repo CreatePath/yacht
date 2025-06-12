@@ -1,7 +1,3 @@
-import random
-import itertools
-
-from enums.score_categories import ScoreCategories
 from common.scoreboard import ScoreBoard
 
 class Player:
@@ -24,35 +20,17 @@ class Player:
         picked.sort()
         return picked
 
-    def selectScoreCategory(self) -> str:
+    def selectScoreCategory(self, dices: list[int]) -> str:
         '''
-        picked 조합을 보고 category 선택
+        주사위 조합을 보고 category 선택
         아직 기록되지 않은 category를 선택하도록 함.
         **Return**
             `selectedCategory`: player가 선택한 category. (ScoreCategory)
         '''
         return input("점수를 채울 카테고리를 선택하세요: ")
 
-    def showScoreBoard(self):
-        print("--- {}의 점수판 ---".format(self.name))
-        print(self.scoreBoard)
+    def getScoreBoard(self) -> ScoreBoard:
+        return self.scoreBoard
 
-
-class RandomPlayer(Player):
-    def __init__(self, scoreBoard: ScoreBoard, name: str):
-        super().__init__(scoreBoard, name)
-    
-    def selectDice(self, remainChances, dices):
-        randResult = [1 if random.random() >= 0.5 else 0 for _ in range(len(dices))]
-        idx = [i for i in range(1, 5) if randResult[i-1] == 1]
-        return [dices[i] for i in idx]
-
-    def selectScoreCategory(self):
-        candidates = [ category for category in self.scoreBoard.allocTable \
-                      if not self.scoreBoard.allocTable[category] and category != ScoreCategories.BONUS ]
-
-        if len(candidates) == 1:
-            return candidates[0]
-
-        randResult = random.randint(0, len(candidates)-1)
-        return candidates[randResult]
+    def getName(self) -> str:
+        return self.name
