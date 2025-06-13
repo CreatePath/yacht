@@ -8,23 +8,25 @@ from common.yacht import Yacht
 from config import GameConfig
 from enums.score_categories import ScoreCategories
 from common.scoreboard import ScoreBoard
-from common.players.player import Player
-from common.players.randomPlayer import RandomPlayer
 from common.dealer import Dealer
 from common.bonus import Bonus
 from common.dice import Dice
 from common import scoreCalculator
 
-def generatePlayer(playerCls: Player, subCategories: list[ScoreCategories], name: str) -> Player:
+from common.players.player import Player
+from common.players.randomPlayer import RandomPlayer
+from common.players.randomGreedyPlayer import RandomGreedyPlayer
+
+def generatePlayer(playerCls: Player, subCategories: list[ScoreCategories], name: str, *args) -> Player:
     scoreBoard = ScoreBoard(ScoreCategories, subCategories)
-    player = playerCls(scoreBoard, name)
+    player = playerCls(scoreBoard, name, *args)
     return player
 
 def main(args):
     start = time.time()
     random.seed(1234)
 
-    GameConfig.NUM_PLAYERS = args.num_human + args.num_rand_agent
+    GameConfig.NUM_PLAYERS = args.numHuman + args.numRand + args.numRandGreedy
     subCategories = [ScoreCategories.ACES,
                      ScoreCategories.DEUCES,
                      ScoreCategories.THREES,
@@ -52,12 +54,16 @@ def main(args):
     scoreMean = [0] * GameConfig.NUM_PLAYERS
     for gameIter in range(args.iteration):
         players = []
-        for i in range(args.num_human):
+        for i in range(args.numHuman):
             player = generatePlayer(Player, subCategories, f"Human_{i+1}")
             players.append(player)
 
-        for i in range(args.num_rand_agent):
+        for i in range(args.numRand):
             player = generatePlayer(RandomPlayer, subCategories, f"Random_{i+1}")
+            players.append(player)
+        
+        for i in range(args.numRandGreedy):
+            player = generatePlayer(RandomGreedyPlayer, subCategories, f"RandomGreedy_{i+1}", dealer)
             players.append(player)
 
         game = Yacht(GameConfig, dealer, players, dice, bonus, args.verbose)
@@ -80,8 +86,9 @@ def main(args):
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("-m", "--num_human", dest="num_human", type=int, action="store", default=0)
-    parser.add_argument("-r", "--num_rand_agent", dest="num_rand_agent", type=int, action="store", default=2)
+    parser.add_argument("-m", "--num_human", dest="numHuman", type=int, action="store", default=0)
+    parser.add_argument("-r", "--num_rand", dest="numRand", type=int, action="store", default=2)
+    parser.add_argument("-g", "--num_rand_greedy", dest="numRandGreedy", type=int, action="store", default=2)
     parser.add_argument("-i", "--iteration", dest="iteration", type=int, action="store", default=3)
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true")
     args = parser.parse_args()

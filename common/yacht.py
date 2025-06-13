@@ -47,7 +47,7 @@ class Yacht:
             p.scoreBoard.setScore(selectedCategory, score)
 
             # Bonus 점수 충족 여부 검토
-            if self.bonus.validate(p.scoreBoard.getSubTotalScore()):
+            if not p.scoreBoard.isalloc(self.bonus.category) and self.bonus.validate(p.scoreBoard.getSubTotalScore()):
                 score = self.bonus.getScore()
                 p.scoreBoard.setScore(self.bonus.category, score)
             

@@ -8,12 +8,12 @@ class RandomPlayer(Player):
     def __init__(self, scoreBoard: ScoreBoard, name: str):
         super().__init__(scoreBoard, name)
     
-    def selectDice(self, remainChances, dices):
+    def selectDice(self, remainChances, dices) -> list[int]:
         randResult = [1 if random.random() >= 0.5 else 0 for _ in range(len(dices))]
         idx = [i for i in range(1, 5) if randResult[i-1] == 1]
         return [dices[i] for i in idx]
 
-    def selectScoreCategory(self, dices: list[int]):
+    def selectScoreCategory(self, dices: list[int]) -> ScoreCategories:
         candidates = [ category for category in self.scoreBoard.allocTable \
                       if not self.scoreBoard.allocTable[category] and category != ScoreCategories.BONUS ]
 

@@ -25,7 +25,7 @@ class Player:
         주사위 조합을 보고 category 선택
         아직 기록되지 않은 category를 선택하도록 함.
         **Return**
-            `selectedCategory`: player가 선택한 category. (ScoreCategory)
+            `selectedCategory`: player가 선택한 category. (ScoreCategory.value)
         '''
         return input("점수를 채울 카테고리를 선택하세요: ")
 
