@@ -1,18 +1,15 @@
 from common.players.randomPlayer import RandomPlayer
+from common.players.greedyPlayer import GreedyPlayer
+from common.scoreboard import ScoreBoard
 from common.dealer import Dealer
 from enums.score_categories import ScoreCategories
 
-class RandomGreedyPlayer(RandomPlayer):
-    def __init__(self, scoreBoard, name, dealer: Dealer):
-        super().__init__(scoreBoard, name)
-        self.dealer = dealer
-    
+class RandomGreedyPlayer(RandomPlayer, GreedyPlayer):
+    def __init__(self, scoreBoard: ScoreBoard, name: str, dealer: Dealer):
+        GreedyPlayer.__init__(self, scoreBoard, name, dealer)
+
+    def selectDice(self, remainChances, dices) -> list[int]:
+        return RandomPlayer.selectDice(self, remainChances, dices)
+
     def selectScoreCategory(self, dices) -> ScoreCategories:
-        maxScore, selectedCategory = -1, None
-        for category in ScoreCategories:
-            if self.scoreBoard.isalloc(category) or category == ScoreCategories.BONUS:
-                continue
-            if maxScore < (score := self.dealer.calculate(category, dices)):
-                maxScore = score
-                selectedCategory = category
-        return selectedCategory
+        return GreedyPlayer.selectScoreCategory(self, dices)
