@@ -16,6 +16,7 @@ from common import scoreCalculator
 from common.players.player import Player
 from common.players.randomPlayer import RandomPlayer
 from common.players.randomGreedyPlayer import RandomGreedyPlayer
+from common.players.allInPlayer import AllInPlayer
 
 def generatePlayer(playerCls: Player, subCategories: list[ScoreCategories], name: str, *args) -> Player:
     scoreBoard = ScoreBoard(ScoreCategories, subCategories)
@@ -26,7 +27,7 @@ def main(args):
     start = time.time()
     random.seed(1234)
 
-    GameConfig.NUM_PLAYERS = args.numHuman + args.numRand + args.numRandGreedy
+    GameConfig.NUM_PLAYERS = args.numHuman + args.numRand + args.numRandGreedy + args.numAllIn
     subCategories = [ScoreCategories.ACES,
                      ScoreCategories.DEUCES,
                      ScoreCategories.THREES,
@@ -66,6 +67,10 @@ def main(args):
             player = generatePlayer(RandomGreedyPlayer, subCategories, f"RandomGreedy_{i+1}", dealer)
             players.append(player)
 
+        for i in range(args.numAllIn):
+            player = generatePlayer(AllInPlayer, subCategories, f"AllIn_{i+1}", dealer)
+            players.append(player)
+
         game = Yacht(GameConfig, dealer, players, dice, bonus, args.verbose)
         game.play()
 
@@ -86,11 +91,17 @@ def main(args):
 
 if __name__ == "__main__":
     parser = ArgumentParser()
+
+    ### Player Config ### 
     parser.add_argument("-m", "--num_human", dest="numHuman", type=int, action="store", default=0)
     parser.add_argument("-r", "--num_rand", dest="numRand", type=int, action="store", default=2)
     parser.add_argument("-g", "--num_rand_greedy", dest="numRandGreedy", type=int, action="store", default=2)
+    parser.add_argument("-a", "--num_allin", dest="numAllIn", type=int, action="store", default=2)
+
+    ### Game Config ###
     parser.add_argument("-i", "--iteration", dest="iteration", type=int, action="store", default=3)
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true")
+
     args = parser.parse_args()
 
     main(args)
