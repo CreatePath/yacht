@@ -18,9 +18,9 @@ from common.players.randomPlayer import RandomPlayer
 from common.players.randomGreedyPlayer import RandomGreedyPlayer
 from common.players.allInPlayer import AllInPlayer
 
-def generatePlayer(playerCls: Player, subCategories: list[ScoreCategories], name: str, *args) -> Player:
+def generatePlayer(playerCls: Player, subCategories: list[ScoreCategories], name: str, *args, **kwargs) -> Player:
     scoreBoard = ScoreBoard(ScoreCategories, subCategories)
-    player = playerCls(scoreBoard, name, *args)
+    player = playerCls(scoreBoard, name, *args, **kwargs)
     return player
 
 def main(args):
@@ -36,18 +36,18 @@ def main(args):
                      ScoreCategories.SIXES,]
 
     dealer = Dealer()
-    dealer.registerCategoryCalculator(ScoreCategories.ACES, scoreCalculator.AcesScoreCalculator())
-    dealer.registerCategoryCalculator(ScoreCategories.DEUCES, scoreCalculator.DeucesScoreCalculator())
-    dealer.registerCategoryCalculator(ScoreCategories.THREES, scoreCalculator.ThreesScoreCalculator())
-    dealer.registerCategoryCalculator(ScoreCategories.FOURS, scoreCalculator.FoursScoreCalculator())
-    dealer.registerCategoryCalculator(ScoreCategories.FIVES, scoreCalculator.FivesScoreCalculator())
-    dealer.registerCategoryCalculator(ScoreCategories.SIXES, scoreCalculator.SixesScoreCalculator())
-    dealer.registerCategoryCalculator(ScoreCategories.CHOICE, scoreCalculator.ChoiceScoreCalculator())
-    dealer.registerCategoryCalculator(ScoreCategories.FOURCARD, scoreCalculator.FourCardScoreCalculator())
-    dealer.registerCategoryCalculator(ScoreCategories.FULLHOUSE, scoreCalculator.FullHouseScoreCalculator())
-    dealer.registerCategoryCalculator(ScoreCategories.SMALL_STRAIGHT, scoreCalculator.SmallStraightScoreCalculator())
-    dealer.registerCategoryCalculator(ScoreCategories.LARGE_STRAIGHT, scoreCalculator.LargeStraightScoreCalculator())
-    dealer.registerCategoryCalculator(ScoreCategories.YACHT, scoreCalculator.YachtScoreCalculator())
+    dealer.registerCategoryCalculator(ScoreCategories.ACES, scoreCalculator.AcesScoreCalculator)
+    dealer.registerCategoryCalculator(ScoreCategories.DEUCES, scoreCalculator.DeucesScoreCalculator)
+    dealer.registerCategoryCalculator(ScoreCategories.THREES, scoreCalculator.ThreesScoreCalculator)
+    dealer.registerCategoryCalculator(ScoreCategories.FOURS, scoreCalculator.FoursScoreCalculator)
+    dealer.registerCategoryCalculator(ScoreCategories.FIVES, scoreCalculator.FivesScoreCalculator)
+    dealer.registerCategoryCalculator(ScoreCategories.SIXES, scoreCalculator.SixesScoreCalculator)
+    dealer.registerCategoryCalculator(ScoreCategories.CHOICE, scoreCalculator.ChoiceScoreCalculator)
+    dealer.registerCategoryCalculator(ScoreCategories.FOURCARD, scoreCalculator.FourCardScoreCalculator)
+    dealer.registerCategoryCalculator(ScoreCategories.FULLHOUSE, scoreCalculator.FullHouseScoreCalculator)
+    dealer.registerCategoryCalculator(ScoreCategories.SMALL_STRAIGHT, scoreCalculator.SmallStraightScoreCalculator)
+    dealer.registerCategoryCalculator(ScoreCategories.LARGE_STRAIGHT, scoreCalculator.LargeStraightScoreCalculator)
+    dealer.registerCategoryCalculator(ScoreCategories.YACHT, scoreCalculator.YachtScoreCalculator)
 
     bonus = Bonus(ScoreCategories.BONUS, GameConfig.BONUS_CRITIERIA, GameConfig.BONUS_SCORE)
     dice = Dice()
@@ -64,11 +64,11 @@ def main(args):
             players.append(player)
         
         for i in range(args.numRandGreedy):
-            player = generatePlayer(RandomGreedyPlayer, subCategories, f"RandomGreedy_{i+1}", dealer)
+            player = generatePlayer(RandomGreedyPlayer, subCategories, f"RandomGreedy_{i+1}", dealer=dealer)
             players.append(player)
 
         for i in range(args.numAllIn):
-            player = generatePlayer(AllInPlayer, subCategories, f"AllIn_{i+1}", dealer)
+            player = generatePlayer(AllInPlayer, subCategories, f"AllIn_{i+1}", dealer=dealer)
             players.append(player)
 
         game = Yacht(GameConfig, dealer, players, dice, bonus, args.verbose)
