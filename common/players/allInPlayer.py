@@ -14,9 +14,9 @@ class AllInPlayer(GreedyPlayer):
         for i, eye in enumerate(dices):
             eyesIdx[eye].append(i)
         sortedEyesIdx = sorted(eyesIdx.items(), key=lambda x: len(x[1]), reverse=True)
-        picked = sortedEyesIdx[0][1]
+        pickedIdx = sortedEyesIdx[0][1]
 
-        return picked
+        return [dices[i] for i in pickedIdx]
 
     def selectScoreCategory(self, dices) -> ScoreCategories:
         return super().selectScoreCategory(dices)
