@@ -1,13 +1,13 @@
 # Yacht Dice
 > **주사위를 굴려 최고의 족보를 완성하자**
 
-https://github.com/user-attachments/assets/d44e0cbe-78ee-4f85-a227-5c8216f93344
-
 > [!NOTE]
 > - [x] yacht CLI 구현
 > - [ ] Heuristic 알고리즘 기반 player 구현
 > - [ ] RL 기반 player 구현
 > - [ ] Heuristic vs RL vs Human 실력 비교
+
+https://github.com/user-attachments/assets/d44e0cbe-78ee-4f85-a227-5c8216f93344
 
 ## 알고리즘 성능 비교
 <img src="./heuristic_result.png" />
