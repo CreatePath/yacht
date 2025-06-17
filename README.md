@@ -3,17 +3,18 @@
 
 https://github.com/user-attachments/assets/d44e0cbe-78ee-4f85-a227-5c8216f93344
 
-
-- 해보니까 재밌어서 구현해봄
-- 일단 CLI로 먼저 구현. GUI는 나중에
-- RL 학습까지 해볼 생각
-
 > [!NOTE]
 > - [x] yacht CLI 구현
 > - [ ] Heuristic 알고리즘 기반 player 구현
 > - [ ] RL 기반 player 구현
 > - [ ] Heuristic vs RL vs Human 실력 비교
 
+## 알고리즘 성능 비교
+<img src="./heuristic_result.png" />
+
+- R (RandomPlayer): 주사위 선택 및 점수칸 선택이 모두 무작위
+- RG (Random-Greedy Player): 주사위 선택은 무작위, 점수칸 선택은 Greedy
+- AllIn Player: 주사위 선택 시 동일한 숫자가 가장 많도록 선택, 점수칸 선택은 Greedy
 
 ## 규칙
 [참고링크](https://brainterrace.tistory.com/100)

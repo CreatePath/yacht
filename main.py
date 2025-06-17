@@ -89,25 +89,25 @@ def main(args):
     plt.subplot(2, 2, 1)
     plt.title(f"Mean Score in {args.iteration} Games")
     plt.bar(playerNames, scoreHistory.mean(axis=1))
-    plt.xticks(fontsize=8)
+    plt.xticks(rotation=90, fontsize=8)
     plt.ylabel("Mean Score")
 
     plt.subplot(2, 2, 2)
     plt.title(f"Variance of Score in {args.iteration} Games")
     plt.bar(playerNames, scoreHistory.var(axis=1))
-    plt.xticks(fontsize=8)
+    plt.xticks(rotation=90, fontsize=8)
     plt.ylabel("Variance")
 
     plt.subplot(2, 2, 3)
     plt.title(f"Min Score in {args.iteration} Games")
     plt.bar(playerNames, scoreHistory.min(axis=1))
-    plt.xticks(fontsize=8)
+    plt.xticks(rotation=90, fontsize=8)
     plt.ylabel("Min Score")
 
     plt.subplot(2, 2, 4)
     plt.title(f"Max Score in {args.iteration} Games")
     plt.bar(playerNames, scoreHistory.max(axis=1))
-    plt.xticks(fontsize=8)
+    plt.xticks(rotation=90, fontsize=8)
     plt.ylabel("Max Score")
 
     plt.subplots_adjust(hspace=0.3, wspace=0.3)
@@ -118,9 +118,9 @@ if __name__ == "__main__":
 
     ### Player Config ### 
     parser.add_argument("-m", "--num_human", dest="numHuman", type=int, action="store", default=0)
-    parser.add_argument("-r", "--num_rand", dest="numRand", type=int, action="store", default=2)
-    parser.add_argument("-g", "--num_rand_greedy", dest="numRandGreedy", type=int, action="store", default=2)
-    parser.add_argument("-a", "--num_allin", dest="numAllIn", type=int, action="store", default=2)
+    parser.add_argument("-r", "--num_rand", dest="numRand", type=int, action="store", default=1)
+    parser.add_argument("-g", "--num_rand_greedy", dest="numRandGreedy", type=int, action="store", default=1)
+    parser.add_argument("-a", "--num_allin", dest="numAllIn", type=int, action="store", default=1)
 
     ### Game Config ###
     parser.add_argument("-i", "--iteration", dest="iteration", type=int, action="store", default=3)
